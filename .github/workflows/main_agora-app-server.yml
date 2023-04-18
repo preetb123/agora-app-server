@@ -30,7 +30,6 @@ jobs:
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           yarn install
-          yarn start
           popd
 
       - name: 'Run Azure Functions Action'
