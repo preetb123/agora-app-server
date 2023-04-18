@@ -70,7 +70,7 @@ const generateRTCToken = (req, resp) => {
   // build the token
   let token;
   if (req.params.tokentype === "userAccount") {
-    token = RtcTokenBuilder.buildTokenWithAccount(
+    token = RtcTokenBuilder.buildTokenWithUserAccount(
       APP_ID,
       APP_CERTIFICATE,
       channelName,
