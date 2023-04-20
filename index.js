@@ -11,8 +11,8 @@ const {
   RtmRole,
 } = require("agora-token");
 
-const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger_output.json");
+// const swaggerUi = require("swagger-ui-express");
+// const swaggerFile = require("./swagger_output.json");
 
 dotenv.config();
 const app = express();
@@ -70,7 +70,7 @@ const generateRTCToken = (req, resp) => {
   // build the token
   let token;
   if (req.params.tokentype === "userAccount") {
-    token = RtcTokenBuilder.buildTokenWithUserAccount(
+    token = RtcTokenBuilder.buildTokenWithAccount(
       APP_ID,
       APP_CERTIFICATE,
       channelName,
@@ -86,6 +86,32 @@ const generateRTCToken = (req, resp) => {
       uid,
       role,
       privilegeExpireTime
+    );
+  } else if (req.params.tokentype === "uidWithPrivilage") {
+    token = RtcTokenBuilder.buildTokenWithUidAndPrivilege(
+      APP_ID,
+      APP_CERTIFICATE,
+      channelName,
+      uid,
+      role,
+      privilegeExpireTime,
+      100,
+      60,
+      0,
+      0
+    );
+  } else if (req.params.tokentype === "userWithPrivilage") {
+    token = RtcTokenBuilder.buildTokenWithUidAndPrivilege(
+      APP_ID,
+      APP_CERTIFICATE,
+      channelName,
+      uid,
+      role,
+      privilegeExpireTime,
+      100,
+      60,
+      0,
+      0
     );
   } else {
     return resp.status(400).json({ error: "token type is invalid" });
@@ -228,4 +254,4 @@ app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
 
-app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
